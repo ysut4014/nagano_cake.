@@ -2,8 +2,14 @@ class Admin::SessionsController < Devise::SessionsController
   # ...
 
   def create
-    if resource == :admin
-    elsif resource == :customer
+    super do |resource|
+      if resource == :admin
+        # 管理者の場合の処理
+        redirect_to admin_top_path and return
+      elsif resource == :customer
+        # 顧客の場合の処理
+        redirect_to customer_dashboard_path and return
+      end
     end
   end
   
