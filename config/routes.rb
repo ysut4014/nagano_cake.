@@ -10,11 +10,11 @@ devise_for :admin, skip: [:registrations, :passwords], controllers: {
 
   # 会員側のルーティング設定
 scope module: :public do
+  get "home/about", to: "homes#about", as: "homes_about"
   get 'top', to: 'homes#top'
   resources :items, only: [:index, :show]
   resources :orders, only: [:index, :show, :new, :thanks]
   resources :cart_items, only: [:index]
-  resources :homes, only: [:about]
   resources :addresses, only: [:index, :edit]
   resources :customers, only: [:show, :edit, :quit]
 end

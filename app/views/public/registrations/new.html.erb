@@ -1,29 +1,73 @@
-<h2>Sign up</h2>
+<main class="container">
+  <h5 class="p-5">新規会員登録</h5>
+  <form action="" method="post">
+    <div class="row">
+      <div class="col-md-6 mb-3">
+        <label class="form-label" for="inputLastName">(姓)</label>
+        <span class="text-danger">*</span>
+        <input type="text" class="form-control" name="last_name" id="inputLastName" placeholder="令和" required>
+      </div>
 
-<%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
-  <%= render "public/shared/error_messages", resource: resource %>
+      <div class="col-md-6 mb-3">
+        <label class="form-label" for="inputFirstName">(名)</label>
+        <span class="text-danger">*</span>
+        <input type="text" class="form-control" name="first_name" id="inputFirstName" placeholder="理子" required>
+      </div>
 
-  <div class="field">
-    <%= f.label :email %><br />
-    <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
-  </div>
+      <div class="col-md-6 mb-3">
+        <label class="form-label" for="inputLastNameKana">(セイ)</label>
+        <span class="text-danger">*</span>
+        <input type="text" class="form-control" name="last_name_kana" id="inputLastNameKana" placeholder="レイワ" required>
+      </div>
 
-  <div class="field">
-    <%= f.label :password %>
-    <% if @minimum_password_length %>
-    <em>(<%= @minimum_password_length %> characters minimum)</em>
-    <% end %><br />
-    <%= f.password_field :password, autocomplete: "new-password" %>
-  </div>
+      <div class="col-md-6 mb-3">
+        <label class="form-label" for="inputFirstNameKana">(メイ)</label>
+        <span class="text-danger">*</span>
+        <input type="text" class="form-control" name="first_name_kana" id="inputFirstNameKana" placeholder="ミチコ" required>
+      </div>
 
-  <div class="field">
-    <%= f.label :password_confirmation %><br />
-    <%= f.password_field :password_confirmation, autocomplete: "new-password" %>
-  </div>
+      <div class="col-md-12 mb-3">
+        <label class="form-label" for="inputEmail">メールアドレス</label>
+        <span class="text-danger">*</span>
+        <input type="email" class="form-control" name="email" id="inputEmail" placeholder="sample@example.com" required>
+      </div>
 
-  <div class="actions">
-    <%= f.submit "Sign up" %>
-  </div>
-<% end %>
+      <div class="col-md-12 mb-3">
+        <label class="form-label" for="inputPostalCode">郵便番号（ハイフンなし）</label>
+        <span class="text-danger">*</span>
+        <input type="postal_code" class="form-control" name="postal_code" placeholder="0000000" required>
+      </div>
 
-<%= render "public/shared/links" %>
+      <div class="col-md-12 mb-3">
+        <label class="form-label" for="inputAddress">住所</label>
+        <span class="text-danger">*</span>
+        <input type="address" class="form-control" name="address" id="inputAddress" placeholder="東京都渋谷区代々木神園町0-0" required>
+      </div>
+
+      <div class="col-md-12 mb-3">
+        <label class="form-label" for="inputTelephone_number">電話番号(ハイフンなし)</label>
+        <span class="text-danger">*</span>
+        <input type="telephone_number" class="form-control" name="telephone_number" placeholder="0000000000" required>
+      </div>
+
+      <div class="col-md-12 mb-3">
+        <label class="form-label" for="inputPassword">パスワード(６文字以上)</label>
+        <span class="text-danger">*</span>
+        <input type="password" class="form-control" name="password">
+      </div>
+
+      <div class="col-md-12 mb-3">
+        <label class="form-label" for="inputPassword">パスワード(確認用)</label>
+        <span class="text-danger">*</span>
+        <input type="password" class="form-control" name="password">
+      </div>
+
+      <div class="col-md-12 mb-3">
+        <button class="btn btn-primary">新規登録</button>
+      </div>
+    </div>
+  </form>
+
+  <h5 class="p-5">既に登録済みの方</h5>
+  <%= render "public/shared/links" %>こちらからログインしてください.
+</main>
