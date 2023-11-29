@@ -17,6 +17,9 @@ scope module: :public do
   resources :cart_items, only: [:index]
   resources :addresses, only: [:index, :edit]
   resources :customers, only: [:show, :edit, :quit]
+  resources :mypage, controller: 'customers', as: 'customers'
+  
+
 end
   # 管理者側のルーティング設定
 namespace :admin do
@@ -27,6 +30,7 @@ namespace :admin do
   resources :orders, only: [:show]
   
   devise_for :admin, controllers: {
+    
     sessions: "admin/sessions"
   }
 

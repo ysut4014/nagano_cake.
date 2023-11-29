@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+<html>
   <head>
     <title>NaganoCake</title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
@@ -9,28 +10,45 @@
     <script src="https://kit.fontawesome.com/853b12f8a1.js" crossorigin="anonymous"></script>
     <%= stylesheet_pack_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
-  </head>
+    <style>
+      /* スタイルを追加してヘッダーの高さを調整 */
+      .navbar {
+        min-height: 120px; /* 80pxに調整（適宜変更） */
+      }
+    </style>
+  </head> 
   
-    <body class="d-flex flex-column vh-100">
-    <header class="shadow-sm">
-      <nav class="navbar navbar-expand-lg navbar-light">
-        <div class="container">
-           <%= link_to "/", class: 'navbar-brand' do %><span style="font-size: 1.25rem;">logo</span>
-           <% end %>
-          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown"
-                        aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-            
-          </button>
-          <div class="collapse navbar-collapse" id="navbarNavDropdown">
-            <ul class="navbar-nav ml-auto">
-              
+<body class="d-flex flex-column vh-100">
+  <header class="shadow-sm">
+    <nav class="navbar navbar-expand-lg navbar-light">
+      <div class="col-md-1 mb-2">
+        <%= link_to "/", class: 'navbar-brand' do %>
+          <span style="font-size: 1.25rem;">logo</span>
+        <% end %>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown"
+          aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+      </div>
+      <div class="container">
+
+          <div class="collapse navbar-collapse" >
+            <ul class="navbar-nav ml-auto">              
             <li class="nav-item">
               <%= link_to "About", homes_about_path, method: :get, class: 'nav-link text-dark' %>
             </li>
+            <% if current_customer %>
+              <%= link_to "マイページ", customer_path(current_user), method: :get, class: 'nav-link text-dark' %>
+            <% else %>
+              <!-- ログインしていない場合のリンク or 非表示の処理 -->
+            <% end %>
             <li class="nav-item">
               <%= link_to "商品一覧", items_path, method: :get, class: 'nav-link text-dark' %>
             </li>
+            <li class="nav-item">
+              <%= link_to "カート", cart_items_path, method: :get, class: 'nav-link text-dark' %>
+            </li>
+
             <li class="nav-item">
               <%= link_to "新規登録", new_customer_registration_path, method: :get, class: 'nav-link text-dark' %>
             </li>
@@ -46,11 +64,16 @@
             <li class="nav-item">
               <%= link_to "ログアウト", destroy_customer_session_path, method: :delete, class: 'nav-link text-dark' %>
             </li>
-            </ul>
-          </div>
+          </ul>
         </div>
-      </nav>
-    </header>
-    <%= yield %>
-  </body>
-</html>
+          <div class="form-inline">
+            <!-- ここに検索ツールのHTMLを追加 -->
+            <!-- 以下は例としてフォームを置いています。実際の検索ツールに合わせて変更してください。 -->
+            <form class="form-inline">
+              <input class="form-control mr-sm-2" type="search" placeholder="検索" aria-label="Search">
+              <button class="btn btn-outline-success my-2 my-sm-0" type="submit">検索</button>
+            </form>
+          </div>             </div>
+      
+    </nav>
+  

@@ -1,73 +1,117 @@
 <main class="container">
   <h5 class="p-5">新規会員登録</h5>
-  <form action="" method="post">
-    <div class="row">
-      <div class="col-md-6 mb-3">
-        <label class="form-label" for="inputLastName">(姓)</label>
-        <span class="text-danger">*</span>
-        <input type="text" class="form-control" name="last_name" id="inputLastName" placeholder="令和" required>
-      </div>
+<% if @customer.errors.any? %>
+  <div id="error_explanation">
+    <h2><%= pluralize(@customer.errors.count, "error") %> prohibited this customer from being saved:</h2>
+    <ul>
+      <% @customer.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+    </ul>
+  </div>
+<% end %>
+  <%= form_with(model: @customer, url: customers_path, method: :post) do |form| %>
+<div class="row">
+  <div class="col-md-3 mb-3">
+    <p>名前</p>
+  </div>
 
-      <div class="col-md-6 mb-3">
-        <label class="form-label" for="inputFirstName">(名)</label>
-        <span class="text-danger">*</span>
-        <input type="text" class="form-control" name="first_name" id="inputFirstName" placeholder="理子" required>
-      </div>
+  <div class="col-md-3 mb-3">
+    <label for="inputLastName">(姓)</label>
+    <input type="text" class="form-control" name="last_name" id="inputLastName" placeholder="令和" required>
+  </div>
 
-      <div class="col-md-6 mb-3">
-        <label class="form-label" for="inputLastNameKana">(セイ)</label>
-        <span class="text-danger">*</span>
-        <input type="text" class="form-control" name="last_name_kana" id="inputLastNameKana" placeholder="レイワ" required>
-      </div>
+  <div class="col-md-3 mb-3">
+    <label for="inputFirstName">(名)</label>
+    <input type="text" class="form-control" name="first_name" id="inputFirstName" placeholder="理子" required>
+  </div>
+</div>
 
-      <div class="col-md-6 mb-3">
-        <label class="form-label" for="inputFirstNameKana">(メイ)</label>
-        <span class="text-danger">*</span>
-        <input type="text" class="form-control" name="first_name_kana" id="inputFirstNameKana" placeholder="ミチコ" required>
-      </div>
+<div class="row">
+  <div class="col-md-3 mb-3">
+    <p>フリガナ</p>
+  </div>
 
-      <div class="col-md-12 mb-3">
-        <label class="form-label" for="inputEmail">メールアドレス</label>
-        <span class="text-danger">*</span>
-        <input type="email" class="form-control" name="email" id="inputEmail" placeholder="sample@example.com" required>
-      </div>
+  <div class="col-md-3 mb-3">
+    <label for="inputLastNameKana">(セイ)</label>
+    <input type="text" class="form-control" name="last_name_kana" id="inputLastNameKana" placeholder="レイワ" required>
+  </div>
 
-      <div class="col-md-12 mb-3">
-        <label class="form-label" for="inputPostalCode">郵便番号（ハイフンなし）</label>
-        <span class="text-danger">*</span>
-        <input type="postal_code" class="form-control" name="postal_code" placeholder="0000000" required>
-      </div>
+  <div class="col-md-3 mb-3">
+    <label for="inputFirstNameKana">(メイ)</label>
+    <input type="text" class="form-control" name="first_name_kana" id="inputFirstNameKana" placeholder="ミチコ" required>
+  </div>
+</div>
 
-      <div class="col-md-12 mb-3">
-        <label class="form-label" for="inputAddress">住所</label>
-        <span class="text-danger">*</span>
-        <input type="address" class="form-control" name="address" id="inputAddress" placeholder="東京都渋谷区代々木神園町0-0" required>
-      </div>
+<div class="row">
+  <div class="col-md-3 mb-3">
+    <p>メールアドレス</p>
+  </div>
 
-      <div class="col-md-12 mb-3">
-        <label class="form-label" for="inputTelephone_number">電話番号(ハイフンなし)</label>
-        <span class="text-danger">*</span>
-        <input type="telephone_number" class="form-control" name="telephone_number" placeholder="0000000000" required>
-      </div>
+  <div class="col-md-6 mb-3">
+    <input type="email" class="form-control" name="email" id="inputEmail" placeholder="sample@example.com" required>
+  </div>
+</div>
 
-      <div class="col-md-12 mb-3">
-        <label class="form-label" for="inputPassword">パスワード(６文字以上)</label>
-        <span class="text-danger">*</span>
-        <input type="password" class="form-control" name="password">
-      </div>
+<div class="row">
+  <div class="col-md-3 mb-3">
+    <p>郵便番号(ハイフンなし)</p>
+  </div>
 
-      <div class="col-md-12 mb-3">
-        <label class="form-label" for="inputPassword">パスワード(確認用)</label>
-        <span class="text-danger">*</span>
-        <input type="password" class="form-control" name="password">
-      </div>
+  <div class="col-md-6 mb-3">
+    <input type="text" class="form-control" name="postal_code" placeholder="0000000" required>
+  </div>
+</div>
 
-      <div class="col-md-12 mb-3">
-        <button class="btn btn-primary">新規登録</button>
-      </div>
-    </div>
-  </form>
+<div class="row">
+  <div class="col-md-3 mb-3">
+    <p>住所</p>
+  </div>
 
-  <h5 class="p-5">既に登録済みの方</h5>
-  <%= render "public/shared/links" %>こちらからログインしてください.
+  <div class="col-md-6 mb-3">
+    <input type="text" class="form-control" name="address" id="inputAddress" placeholder="東京都渋谷区代々木神園町0-0" required>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-md-3 mb-3">
+    <p>電話番号(ハイフンなし)</p>
+  </div>
+
+  <div class="col-md-6 mb-3">
+    <input type="text" class="form-control" name="telephone_number" placeholder="0000000000" required>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-md-3 mb-3">
+    <p>パスワード</p>
+  </div>
+
+  <div class="col-md-6 mb-3">
+    <input type="password" class="form-control" name="customer[password]" required>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-md-3 mb-3">
+    <p>パスワード(確認用)</p>
+  </div>
+
+  <div class="col-md-6 mb-3">
+    <input type="password" class="form-control" name="customer[password_confirmation]" required>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-md-3 mb-3">
+  </div>
+  <div class="col-md-6 mb-3">
+    <button class="btn btn-primary">新規登録</button>
+  </div>
+</div>
+      <h5 class="p-3">既に登録済みの方</h5>
+ <a href="<%= new_customer_session_path %>">     こちら　</a>からログインしてください.
+
+<% end %>
 </main>
