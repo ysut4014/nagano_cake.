@@ -44,18 +44,12 @@ devise_for :admin, skip: [:registrations, :passwords], controllers: {
 namespace :admin do
   get 'top', to: 'homes#top', as: 'top'
   resources :items, only: [:index, :new, :edit, :show]
-  resources :customers, only: [:index, :edit, :show]
-  resources :genres, only: [:index, :edit]
-  resources :orders, only: [:show]
+  resources :customers, only: [:index, :edit, :show, :new]
+  resources :genres
+  resources :orders, only: [:show, :index]
   
-  devise_for :admin, controllers: {
-    
-    sessions: "admin/sessions"
-  }
-
   devise_scope :admin do
     get '/sign_out' => 'sessions#destroy'
   end
-# For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 end
 end
