@@ -1,0 +1,22 @@
+<h5 class="p-5">配送先一覧</h5>
+
+  <table class="table">
+    <thead>
+      <tr>
+        <th>宛名</th>
+        <th>郵便番号</th>
+        <th>住所</th>
+        <!-- 他に表示したい項目があればここに追加 -->
+      </tr>
+    </thead>
+    <tbody>
+      <% @addresses.each do |address| %>
+        <tr>
+          <td><%= address.recipient_name %></td>
+          <td><%= address.postal_code %></td>
+          <td><%= address.full_address %></td>
+          <!-- 他に表示したい項目があればここに追加 -->
+        </tr>
+      <% end %>
+    </tbody>
+  </table>

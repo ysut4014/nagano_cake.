@@ -1,0 +1,14 @@
+<main class="container">
+  <div class="row d-flex align-items-center">
+    <div class="col-12 text-center">
+      <h5 class="p-5"><strong>会員ログイン</strong></h5>
+      <div class="messages">
+        <p>退会すると、会員登録情報や<br>
+        これまでの購入履歴が閲覧できなくなります。<br>
+        退会する場合は、「退会する」をクリックしてください。</p>
+      </div>  
+      <%= link_to '退会しない', customers_show_path(current_customer), class: 'btn btn-primary' %>
+      <%= button_to '退会する', quit_destroy_customer_path, method: :delete, data: { confirm: '本当に退会しますか？' }, class: 'btn btn-danger' %>
+    </div>
+  </div>
+</main>

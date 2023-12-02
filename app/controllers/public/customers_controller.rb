@@ -1,14 +1,14 @@
 class Public::CustomersController < ApplicationController
   before_action :authenticate_customer!
-
-    # マイページへのアクション
+def addresses
+  # アクションの中身
+end    # マイページへのアクション
     def show
         @customer = current_customer
     end
 
     # 登録情報編集へのアクション
     def edit
-        @customer = current_customer
     end
 
     # 登録情報の編集を保存するアクション
@@ -21,12 +21,18 @@ class Public::CustomersController < ApplicationController
             render 'edit'
         end
     end
+    
 
     # 登録情報編集画面から退会ページを表示するアクション
-    def quit
+def quit
+  # 退会ページに初めてアクセスした時の処理
+end
 
-    end
-
+def quit_destroy
+  current_customer.destroy
+  # その他の処理（例: サインアウトなど）
+  redirect_to root_path, notice: '退会が完了しました。ご利用いただきありがとうございました。'
+end
 private
 
 def customer_params

@@ -1,0 +1,75 @@
+<main class="container">
+  <h5 class="p-5">マイページ編集</h5>
+    <%= form_with(model: @customer, url: customer_path, method: :patch) do |f| %>
+
+    <div class="row">
+      <table class="table table-bordered table-condensed custom-table">
+        <thead>
+          <tr>
+            <th colspan="2" class="information-link">登録情報</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="colx-xs-2" style="background-color: #f0f0f0;">氏名</td>
+            <td>
+              <%= text_field_tag 'customer[last_name]', current_customer.last_name, class: 'form-control' %>
+              <%= text_field_tag 'customer[first_name]', current_customer.first_name, class: 'form-control' %>
+            </td>
+          </tr>
+          <tr>
+            <td class="colx-xs-2" style="background-color: #f0f0f0;">カナ</td>
+            <td>
+              <%= text_field_tag 'customer[last_name_kana]', current_customer.last_name_kana, class: 'form-control' %>
+              <%= text_field_tag 'customer[first_name_kana]', current_customer.first_name_kana, class: 'form-control' %>
+            </td>
+          </tr>
+          <tr>
+            <td class="colx-xs-2" style="background-color: #f0f0f0;">郵便番号</td>
+            <td>
+              <%= text_field_tag 'customer[postal_code]', current_customer.postal_code, class: 'form-control' %>
+            </td>
+          </tr>
+          <tr>
+          <tr>
+            <td class="colx-xs-2" style="background-color: #f0f0f0;">住所</td>
+            <td>
+              <%= text_field_tag 'customer[address]', current_customer.address, class: 'form-control' %>
+            </td>
+          </tr>
+          <tr>
+            <td class="colx-xs-2" style="background-color: #f0f0f0;">電話番号</td>
+            <td>
+              <%= text_field_tag 'customer[telephone_number]', current_customer.telephone_number, class: 'form-control' %>
+            </td>
+          </tr>
+          <tr>
+            <td class="colx-xs-2" style="background-color: #f0f0f0;">メールアドレス</td>
+            <td>
+              <%= text_field_tag 'customer[email]', current_customer.email, class: 'form-control' %>
+            </td>
+          </tr>          
+        </tbody>
+      </table>
+
+      <table class="table-condensed">
+        <tbody>
+          <tr>
+            <th class="shipping-link">配送先</th>
+            <td><%= link_to "一覧を見る", "/public/customers/#{current_customer.id}/addresses", class: "btn btn-info" %></td>
+          </tr>
+          <tr>
+            <th class="shipping-link">注文履歴</th>
+            <td><%= link_to "一覧を見る", customer_orders_path(current_customer), class: "btn btn-info" %></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="actions">
+        <%= submit_tag '更新する', class: 'btn btn-primary' %>
+        <%= link_to 'キャンセル', customers_show_path(current_customer), class: 'btn btn-secondary' %>
+      </div>
+      <% end %>
+    </div>
+  </form>
+</main>
