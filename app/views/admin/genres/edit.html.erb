@@ -1,0 +1,19 @@
+<main class="container">
+  <div class="row d-flex align-items-center">
+    <div class="col-12">
+      <h5 class="p-5"><strong>ジャンル編集</strong></h5>
+      <%= form_for(@genre, url: admin_genre_path(@genre), method: :patch) do |f| %>
+        <div class="form-group row">
+          <%= f.label :ジャンル名, class: "col-md-2 ", style: "font-size: smaller; font-weight: bold;" %>
+          <div class="col-md-3">
+            <%= f.text_field :name, class: "form-control", placeholder: "ジャンル名", required: true %>
+          </div>
+          
+          <div class="col-md-2">
+            <%= f.submit '更新する', class: "btn btn-info" %>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</main>
