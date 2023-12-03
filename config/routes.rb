@@ -43,9 +43,9 @@ devise_for :admin, skip: [:registrations, :passwords], controllers: {
 }  
 namespace :admin do
   get 'top', to: 'homes#top', as: 'top'
-  resources :items, only: [:index, :new, :edit, :show]
   resources :customers, only: [:index, :edit, :show, :new]
   resources :genres
+  resources :items
   resources :orders, only: [:show, :index]
   
   devise_scope :admin do
