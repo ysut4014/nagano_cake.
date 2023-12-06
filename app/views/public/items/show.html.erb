@@ -1,0 +1,45 @@
+<main class="container">
+  <div class="row">
+    <div class="col-xs-2">
+      <div class="genrekara" style="font-size: 20px;">
+        ジャンルから探す
+      </div>
+      <table class="table table-bordered table-hover text-center ec-genre-list">
+        <tr>
+          <td>
+            <%= link_to "全商品を表示", items_path, class: "ec-genre-list-item" %>
+          </td>
+        </tr>
+        <% @genres.each do |genre| %>
+          <tr>
+            <td>
+              <%= link_to genre.name, genre_path(genre), class: "ec-genre-list-item" %>
+            </td>
+          </tr>
+        <% end %>
+      </table>
+    </div>
+
+<br>
+        <div class="col-xs-5 mt-5">
+          <% if @item.image.attached? %>
+            <p class="item-content1"><%= image_tag @item.image.variant(resize: "300x250").processed %></p>
+          <% else %>
+            <p class="item-content1"><%= image_tag 'no_image.jpg', size: '300x250' %></p>
+          <% end %>
+        </div>
+
+<div class="col-xs-7 mt-5">
+
+    <h3><%= @item.name %></h3>
+    <p><%= @item.introduction %></p>
+    <div class="col-xs-5">
+    </div>
+
+</div>
+
+
+      </div>
+    </div>
+  </div>
+</main>
