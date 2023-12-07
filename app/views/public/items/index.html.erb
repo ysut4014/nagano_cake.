@@ -1,36 +1,46 @@
 <main class="container">
-  <div class="row d-flex align-items-center">
-    <div class="col-12 ">
-      <% if flash[:alert] %>
-        <div class="alert alert-danger">
-          <%= flash[:alert] %>
-        </div>
-      <% end %>
-      <h5 class="p-5"><strong>商品一覧</strong></h5>
-<%= link_to "新規商品登録", new_admin_item_path, class: "btn btn-primary" %>      <table class="table">
-        <thead>
+  <div class="row">
+
+    <div class="col-md-3">
+      <div class="genrekara" style="font-size: 20px; border: 1px solid #000; padding: 10px; border-radius: 5px; text-center">
+        ジャンル検索
+      </div>
+      <table class="table table-bordered table-hover text-center ec-genre-list">
+        <% @genres.each do |genre| %>
           <tr>
-            <th>商品ID</th>
-            <th>商品名</th>
-            <th>税抜価格</th>
-            <th>ジャンル</th>
-            <th>ステータス</th>
-            <!-- Add more columns as needed -->
+            <td>
+              <%= link_to genre.name, genre_path(genre), class: "ec-genre-list-item" %>
+            </td>
           </tr>
-        </thead>
-        <tbody>
-          <% @items.each do |item| %>
-            <tr>
-              <td><%= item.id %></td>
-              <td><%= link_to item.name, item_path(item) %></td>
-              <td><%= item.price %>円</td>
-              <td><%= item.genre.name %></td>
-              <td><%= item.is_sold_out? ? '販売停止中' : '販売中' %></td>
-              <!-- Add more columns as needed -->
-            </tr>
-          <% end %>
-        </tbody>
+        <% end %>
       </table>
+    </div>
+
+    <div class="col-md-9">
+      <h5 class="p-5"><strong>商品一覧</strong></h5>
+      <div class="row">
+        <% @items.each do |item| %>
+          <div class="col-md-3">
+            <div class=" mb-4 box-shadow">
+              <%= link_to item_path(item) do %>
+<% if item.image.attached? %>
+  <%= image_tag(item.image, class: "card-img-top", alt: item.name, size: "300x100") %>
+<% else %>
+  <%= image_tag('no_image.jpg', class: "card-img-top", alt: "No Image", size: "300x100") %>
+<% end %>
+
+                
+                <div class="card-body">
+                  <p class="card-text"><%= item.name %></p>
+                  <p class="card-text"><%= item.price %>円</p>
+                </div>
+              <% end %>
+            </div>
+          </div>
+        <% end %>
+      </div>
+
+      <%= link_to "新規商品登録", new_admin_item_path, class: "btn btn-primary" %>
     </div>
   </div>
 </main>

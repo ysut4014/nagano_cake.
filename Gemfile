@@ -59,3 +59,4 @@ gem 'devise'
 
 gem 'kaminari'
 gem 'will_paginate'
+gem 'will_paginate-bootstrap'

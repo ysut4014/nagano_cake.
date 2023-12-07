@@ -4,8 +4,8 @@ class Public::GenresController < ApplicationController
     
   end
   def index
+    @genre = Genre.new 
     @genres = Genre.all
-    @genre = Genre.new
   end
   def create
     @genre = Genre.new(genre_params)
