@@ -19,7 +19,7 @@ scope module: :public do
   resources :items
   resources :genres
   resources :orders, only: [:index, :show, :new, :thanks]
-  resources :cart_items
+  resources :cart_items, only: [:index, :create]
   resources :addresses, only: [:index, :edit]
   resources :customers, only: [:show, :edit, :update, :destroy] do
     resources :addresses
@@ -44,7 +44,7 @@ devise_for :admin, skip: [:registrations, :passwords], controllers: {
 }  
 namespace :admin do
   get 'top', to: 'homes#top', as: 'top'
-  resources :customers, only: [:index, :edit, :show, :new]
+  resources :customers
   resources :genres
   resources :items
   resources :orders, only: [:show, :index]

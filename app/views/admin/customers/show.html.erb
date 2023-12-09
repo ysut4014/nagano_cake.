@@ -1,0 +1,97 @@
+<main class="container">
+  <div class="row">
+    <div class="col-md-12">
+
+      <h5 class="p-5"><%= "#{@customer.last_name} #{@customer.first_name}" %> さんの詳細</h2>
+
+      <%= form_for(@customer, url: admin_customer_path(@customer), method: :patch) do |f| %>
+      
+        <div class="row">
+          <div class="col-md-3 mb-3">
+            <p>会員ID</p>
+          </div>
+          <div class="col-md-3 mb-3">
+            <%= @customer.id %> 
+          </div>
+        </div>
+        
+        <div class="row">
+          <div class="col-md-3 mb-3">
+            <p>名前</p>
+          </div>
+          <div class="col-md-3 mb-3">
+            <%= "#{@customer.last_name} #{@customer.first_name}" %> 
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-3 mb-3">
+            <p>フリガナ</p>
+          </div>
+          <div class="col-md-3 mb-3">
+            <%= "#{@customer.last_name_kana} #{@customer.first_name_kana}" %> 
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-3 mb-3">
+            <p>メールアドレス</p>
+          </div>
+          <div class="col-md-6 mb-3">
+            <%= @customer.email %> 
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-3 mb-3">
+            <p>郵便番号(ハイフンなし)</p>
+          </div>
+          <div class="col-md-6 mb-3">
+            <%= @customer.postal_code %> 
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-3 mb-3">
+            <p>住所</p>
+          </div>
+          <div class="col-md-6 mb-3">
+            <%= @customer.address %> 
+          </div>
+        </div>
+        
+        <div class="row">
+          <div class="col-md-3 mb-3">
+            <p>電話番号(ハイフンなし)</p>
+          </div>
+          <div class="col-md-6 mb-3">
+            <%= @customer.telephone_number %> 
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-3 mb-3">
+            <p>会員ステータス</p>
+          </div>
+          <div class="col-md-6 mb-3">
+            <% if @customer.is_active %>
+              <span style="color: green;">有効</span>
+            <% else %>
+              <span style="color: gray;">無効</span>
+            <% end %>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-3 mb-3"></div>
+          <div class="col-md-6 mb-3">
+            <%= link_to '編集', edit_admin_customer_path(@customer), class: "btn btn-primary" %>
+            <%= link_to '会員一覧', admin_customers_path, class: "btn btn-secondary" %>
+          </div>
+        </div>
+
+      <% end %>
+
+    </div>
+  </div>
+</main>

@@ -1,0 +1,40 @@
+<main class="container">
+  <div class="row d-flex align-items-center">
+    <div class="col-12">
+      <h5 class="p-5"><strong>会員一覧</strong></h5>
+      <table class="table">
+        <thead>
+          <tr>
+            <th>会員ID</th>
+            <th>会員名</th>
+            <th>メールアドレス</th>
+            <th>ステータス</th>
+            <!-- 他の必要な列も追加することができます -->
+          </tr>
+        </thead>
+        <tbody>
+          <% @customers.each do |customer| %>
+            <tr>
+              <td><%= customer.id %></td>
+<td>
+  <%= link_to "#{customer.last_name} #{customer.first_name}", admin_customer_path(customer) %>
+</td>
+              <td><%= customer.email %></td>
+<td>
+  <% if (customer.is_active)  %>
+    <span style="color: green;">有効</span>
+  <%  else  %>
+    <span style="color: gray;">無効</span>
+  <% end %>
+</td>
+
+            </tr>
+            
+      <div style="text-align: center;"><%= paginate @customers %></div>
+          <% end %>
+          
+        </tbody>
+      </table>
+    </div>
+  </div>
+</main>

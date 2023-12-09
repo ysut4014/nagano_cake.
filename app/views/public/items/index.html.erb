@@ -2,7 +2,7 @@
   <div class="row">
 
     <div class="col-md-3">
-      <div class="genrekara" style="font-size: 20px; border: 1px solid #000; padding: 10px; border-radius: 5px; text-center">
+      <div class="genrekara mt-5" style="font-size: 20px; border: 1px solid #000; padding: 10px; border-radius: 5px; text-center">
         ジャンル検索
       </div>
       <table class="table table-bordered table-hover text-center ec-genre-list">
@@ -13,7 +13,10 @@
             </td>
           </tr>
         <% end %>
+        
       </table>
+            <%= link_to "新規商品登録", new_admin_item_path, class: "btn btn-primary" %>
+
     </div>
 
     <div class="col-md-9">
@@ -32,18 +35,19 @@
                 
                 <div class="card-body">
                   <p class="card-text"><%= item.name %></p>
-                  <p class="card-text"><%= item.price %>円</p>
+                  <p class="card-text">¥<%= item.price %></p>
                 </div>
               <% end %>
+              
             </div>
           </div>
+          
         <% end %>
-      </div>
-　　
-      <%= link_to "新規商品登録", new_admin_item_path, class: "btn btn-primary" %>
-      
       <%= paginate @items %>
-
+      </div>
+      
     </div>
+
   </div>
+
 </main>
