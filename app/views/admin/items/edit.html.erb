@@ -1,0 +1,78 @@
+<main class="container">
+  <div class="row d-flex align-items-center justify-content-center">
+    <div class="col-12 text-center">
+      <%= form_for(@item, url: admin_item_path(@item), method: :patch, html: { multipart: true }) do |f| %>
+
+        <h5 class="p-5"><strong>商品編集</strong></h5>
+
+        <div class="row mb-3">
+          <div class="col-md-3">
+            <p>商品画像</p>
+          </div>
+          <div class="col-md-3">
+            <%= f.file_field :image %>   
+          </div>
+        </div>
+        
+        <div class="row mb-3">
+          <div class="col-md-3">
+            <p>商品名</p>
+          </div>
+          <div class="col-md-3">
+            <%= f.text_field :name, class: "form-control", placeholder: "商品名", required: true %>
+          </div>
+        </div>
+        
+        <div class="row mb-3">
+          <div class="col-md-3">
+            <p>商品説明</p>
+          </div>
+          <div class="col-md-6">
+            <%= f.text_area :introduction, class: "form-control", placeholder: "ここに説明文を記述します", required: true, rows: 5 %>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <div class="col-md-3">
+            <p>ジャンル</p>
+          </div>
+          <div class="col-md-3">
+            <%= f.select :genre_id, options_from_collection_for_select(Genre.all, :id, :name), { prompt: '選択してください' }, class: "form-control", required: true %>
+          </div>
+        </div>
+        
+        <div class="row mb-3">
+          <div class="col-md-3">
+            <p>税抜価格</p>
+          </div>
+          <div class="col-md-3">
+            <div class="input-group">
+              <%= f.text_field :price, class: "form-control", placeholder: "1000", required: true %>
+              <h3>円</h3>
+            </div>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <div class="col-md-3">
+            <p>販売ステータス</p>
+          </div>
+          <div class="col-md-1">
+            <%= f.radio_button :is_sold_out, "sale", class: "form-check-input" %>
+            <%= f.label :is_sold_out, "販売中", class: "form-check-label" %>
+          </div>
+          <div class="col-md-2">
+            <%= f.radio_button :is_sold_out, "sales_stop", class: "form-check-input" %>
+            <%= f.label :is_sold_out, "販売停止中", class: "form-check-label" %>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <div class="col-md-3 text-center mx-auto">
+            <%= f.submit "更新", class: "btn btn-info" %>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</main>

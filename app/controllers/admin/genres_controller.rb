@@ -23,6 +23,11 @@ class Admin::GenresController < ApplicationController
       render :edit
     end
   end  
+  
+  def show
+    @item = Item.find(params[:id])
+  end
+  
   def edit
   end  
 

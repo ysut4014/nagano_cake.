@@ -1,8 +1,8 @@
 <main class="container">
   <div class="row d-flex align-items-center">
-    <div class="col-12 ">
+    <div class="col-12">
       <h5 class="p-5"><strong>商品一覧</strong></h5>
-<%= link_to "新規商品登録", new_admin_item_path, class: "btn btn-primary" %>     
+      <%= link_to "新規商品登録", new_admin_item_path, class: "btn btn-primary" %>     
       <table class="table">
         <thead>
           <tr>
@@ -11,7 +11,6 @@
             <th>税抜価格</th>
             <th>ジャンル</th>
             <th>ステータス</th>
-            <!-- Add more columns as needed -->
           </tr>
         </thead>
         <tbody>
@@ -22,13 +21,17 @@
               <td><%= item.price %>円</td>
               <td><%= item.genre.name %></td>
               <td><%= item.is_sold_out? ? '販売停止中' : '販売中' %></td>
-              <!-- Add more columns as needed -->
             </tr>
+            
+            
           <% end %>
+          
+          
+          
         </tbody>
-        <div style="text-align: center;"><%= will_paginate @items %></div>
-
       </table>
+      <div style="text-align: center;"><%= paginate @items %></div>
+      
     </div>
   </div>
 </main>

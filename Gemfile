@@ -57,6 +57,7 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
 gem 'devise'
 
-gem 'kaminari'
-gem 'will_paginate'
-gem 'will_paginate-bootstrap'
+
+gem 'kaminari', '~> 1.2.1'
+
+gem 'image_processing', '~> 1.2'

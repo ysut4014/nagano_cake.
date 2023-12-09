@@ -1,5 +1,5 @@
 class Admin::ItemsController < ApplicationController
-  before_action :get_genres, only: [:new, :edit]
+  before_action :get_genres, only: [:new, :edit, :show]
 
   def index
     @items = Item.page(params[:page]).per(10)
@@ -20,13 +20,28 @@ class Admin::ItemsController < ApplicationController
     else
       render :new
     end
-  end  
+  end
+  
+  def show
+    @item = Item.find(params[:id])
+  end
+  
 
+  def update
+    @item = Item.find(params[:id])
+
+    if @item.update(item_params)
+      redirect_to admin_item_path(@item), notice: 'Item was successfully updated.'
+    else
+      render :edit
+    end
+  end
+  
   private
 
-  def item_params
-    # your strong parameters definition here
-  end
+def item_params
+  params.require(:item).permit(:image, :name, :introduction, :genre_id, :price, :is_sold_out)
+end
 
   def get_genres
     @genres = Genre.all
