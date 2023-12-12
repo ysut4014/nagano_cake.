@@ -19,7 +19,8 @@ scope module: :public do
   resources :items
   resources :genres
   resources :orders, only: [:index, :show, :new, :thanks]
-  resources :cart_items, only: [:index, :create]
+  resources :cart_items
+
   resources :addresses
   resources :customers, only: [:show, :edit, :update, :destroy] do
     resources :addresses

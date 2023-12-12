@@ -1,40 +1,53 @@
 <main class="container">
   <div class="row">
-    <div class="col-xs-2 mt-5">
-      <div class="genrekara" style="font-size: 20px;">
-        ジャンルから探す
-      </div>
-      <table class="table table-bordered table-hover text-center ec-genre-list ">
-        <tr>
-          <td>
-            <%= link_to "全商品を表示", items_path, class: "ec-genre-list-item" %>
-          </td>
-        </tr>
-        <% @genres.each do |genre| %>
-          <tr>
-            <td>
-              <%= link_to genre.name, genre_path(genre), class: "ec-genre-list-item" %>
-            </td>
-          </tr>
-        <% end %>
-      </table>
+    <div class="col-xs-12 mt-5 text-center">
     </div>
 
-<br>
-    <div class="col-xs-5 mt-5">
+    <div class="col-xs-5 mt-2">
+      <h3 style="font-weight: bold; margin-left: auto; text-align: right; margin-top: 10px; "><%= @item.name %></h3>
+
       <% if @item.image.attached? %>
-        <p class="item-content1" style="margin-left: 20px;"><%= image_tag @item.image.variant(resize: "300x250").processed %></p>
+        <p class="item-content1" style="margin-left: 50px; margin-right: 50px;">
+          <%= image_tag @item.image.variant(resize: "300x250").processed %>
+        </p>
       <% else %>
-        <p class="item-content1" style="margin-left: 20px;"><%= image_tag 'no_image.jpg', size: '300x250' %></p>
+        <p class="item-content1" style="margin-left: 50px; margin-right: 50px;">
+          <%= image_tag 'no_image.jpg', size: '300x250' %>
+        </p>
       <% end %>
     </div>
 
-
-        <div class="col-xs-7 mt-5">
+    <div class="col-xs-7 mt-5">
+      <div class="col-xs-7">
+         <%= form_with(model: CartItem.new, url: cart_items_path, method: :post) do |f| %>
+          <div class="item-details">
+            <div class="item-detail" style="margin-bottom: 10px; margin-top: 10px;">
+              <%= @item.introduction %>
+            </div>
+            <div class="item-detail" style="color: black; margin-bottom: 10px;">
+              ジャンル:<span style="color: blue;"><%= @item.genre.name %></span>
+            </div>
+            <div class="item-detail mt-3" style="margin-bottom: 10px;">
+              <%= number_to_currency(@item.price * 1.1, unit: '¥', precision: 0) %> (税込)
+              <% if @item.is_sold_out %>
+                <span style="color: grey;">販売停止中</span>
+              <% else %>
+                <span style="color: green;">販売中</span>
+              <% end %>
+            </div>
+          </div>
+          <br>
+          <p>数量を指定してください</p>
           
-          <h3><%= @item.name %></h3>
-          <p><%= @item.introduction %></p>
-        </div>
+          <div class="form-group" style="margin-bottom: 10px;">
+            <%= f.hidden_field :item_id, value: @item.id %>
+            <%= f.label :amount, '個数' %>
+            <%= f.select :amount, *[1..10] %>
+
+          <%= f.submit 'カートに入れる', class: 'btn btn-primary' %>
+        <% end %>
+          </div>
+        
       </div>
     </div>
   </div>

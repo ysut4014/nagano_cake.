@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_12_06_055720) do
+ActiveRecord::Schema.define(version: 2023_12_12_134025) do
 
   create_table "action_text_rich_texts", force: :cascade do |t|
     t.string "name", null: false
@@ -138,6 +138,15 @@ ActiveRecord::Schema.define(version: 2023_12_06_055720) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  create_table "other_model_records", force: :cascade do |t|
+    t.string "name"
+    t.integer "quantity"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.integer "item_id", null: false
+    t.index ["item_id"], name: "index_other_model_records_on_item_id"
+  end
+
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "addresses", "customers"
@@ -146,4 +155,5 @@ ActiveRecord::Schema.define(version: 2023_12_06_055720) do
   add_foreign_key "orders", "customers"
   add_foreign_key "orders_details", "items"
   add_foreign_key "orders_details", "orders"
+  add_foreign_key "other_model_records", "items"
 end

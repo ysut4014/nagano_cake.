@@ -1,0 +1,42 @@
+<main class="container">
+  <div class="row">
+    <div class="col-12">
+      <h5 class="p-5"><strong>配送先登録</strong></h5>
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th>商品名</th>
+            <th>単価(税込)</th>
+            <th>数量</th>
+            <th>小計</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @cart_items.each do |cart_item| %>
+            <tr>
+              <td style="vertical-align: middle;">
+                <div style="display: flex; align-items: center;">
+                  <% if cart_item.item.image.attached? %>
+                    <p class="item-content1" style="margin-right: 10px; margin-bottom: 0;">
+                      <%= image_tag cart_item.item.image, size: '30x25' %>
+                    </p>
+                  <% else %>
+                    <p class="item-content1" style="margin-right: 10px; margin-bottom: 0;">
+                      <%= image_tag 'no_image.jpg', size: '30x25' %>
+                    </p>                    
+                  <% end %>
+                  <%= cart_item.item.name %>
+                </div>
+              </td>
+              <td style="vertical-align: middle;"><%= number_to_currency(cart_item.item.price * 1.1, unit: '¥', precision: 0) %></td>
+              <td style="vertical-align: middle;"><%= cart_item.amount %></td>
+              <td style="vertical-align: middle;"><%= number_to_currency((cart_item.item.price * 1.1).floor * cart_item.amount, unit: '¥', precision: 0) %></td>
+              <td style="vertical-align: middle;"><%= link_to '削除する', cart_item, method: :delete, data: { confirm: '本当に削除しますか？' }, class: 'btn btn-danger btn-sm' %></td>
+            </tr>
+          <% end %>      
+        </tbody>
+      </table>      
+    </div>
+  </div>
+</main>

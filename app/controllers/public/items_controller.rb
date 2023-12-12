@@ -12,7 +12,7 @@ class Public::ItemsController < ApplicationController
   end
 
 def index
-  @items = Item.page(params[:page]).per(8)
+  @items = Item.page(params[:page])
   @genres = Genre.all
 end
   def create
@@ -28,7 +28,10 @@ end
     @item = Item.find(params[:id])
     @genres = Genre.all
   end
-
+  
+def with_tax_price
+  (price * 1.1).floor
+end
   private
 
   def item_params

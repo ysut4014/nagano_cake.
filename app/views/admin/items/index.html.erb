@@ -21,6 +21,8 @@
               <td><%= item.price %>円</td>
               <td><%= item.genre.name %></td>
               <td><%= item.is_sold_out? ? '販売停止中' : '販売中' %></td>
+<td><%= link_to '削除する', admin_item_path(item), method: :delete, data: { confirm: '本当に削除しますか？' }, class: 'btn btn-danger text-center' %></td>
+
             </tr>
             
             
