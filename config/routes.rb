@@ -20,6 +20,7 @@ scope module: :public do
   resources :genres
   resources :orders, only: [:index, :show, :new, :thanks]
   resources :cart_items
+      delete 'clear_cart', to: 'cart_items#clear_cart', as: 'clear_cart'
 
   resources :addresses
   resources :customers, only: [:show, :edit, :update, :destroy] do

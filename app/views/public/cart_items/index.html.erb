@@ -1,7 +1,11 @@
 <main class="container">
   <div class="row">
     <div class="col-12">
-      <h5 class="p-5"><strong>配送先登録</strong></h5>
+
+      <div class="d-flex justify-content-between align-items-center">
+        <h5 class="p-5"><strong>配送先登録</strong></h5>
+          <%= button_to 'カートを空にする', clear_cart_path, method: :delete, data: { confirm: '本当にカートを空にしますか？' }, class: 'btn btn-danger' %>
+      </div>  
       <table class="table table-bordered">
         <thead>
           <tr>
@@ -29,14 +33,56 @@
                   <%= cart_item.item.name %>
                 </div>
               </td>
-              <td style="vertical-align: middle;"><%= number_to_currency(cart_item.item.price * 1.1, unit: '¥', precision: 0) %></td>
-              <td style="vertical-align: middle;"><%= cart_item.amount %></td>
-              <td style="vertical-align: middle;"><%= number_to_currency((cart_item.item.price * 1.1).floor * cart_item.amount, unit: '¥', precision: 0) %></td>
-              <td style="vertical-align: middle;"><%= link_to '削除する', cart_item, method: :delete, data: { confirm: '本当に削除しますか？' }, class: 'btn btn-danger btn-sm' %></td>
+              <td style="vertical-align: middle;">¥<%= cart_item.item.with_tax_price%></td>
+  <td class="col-xs-1">
+    <%= form_for(cart_item, url: cart_item_path(cart_item), method: :patch) do |f| %>
+      <%= f.select :amount, (1..10), { selected: cart_item.amount } %> <%= f.submit '変更する', class: 'btn btn-success' %>
+    <% end %>
+  </td>
+
+              <td style="vertical-align: middle;">¥<%= cart_item.subtotal %></td>
+              <td style="vertical-align: middle; text-align: center;"><%= link_to '削除する', cart_item, method: :delete, data: { confirm: '本当に削除しますか？' }, class: 'btn btn-danger btn-sm' %></td>
+              
             </tr>
-          <% end %>      
+
+
+
+          <% end %>    
+          
+          
+          
+          
+          
         </tbody>
-      </table>      
+      </table>  
+<% flash.each do |key, value| %>
+  <div class="alert alert-<%= key %>">
+    <%= value %>
+  </div>
+<% end %>      
+  <div class="row">
+<div class="col-xs-8">
+    <span>
+    <%= link_to "買い物を続ける", items_path, class: "btn btn-primary", data: {"turbolinks" => false} %>
+    </span>
+</div>
+</div>
+<div class="col-md-3 float-right">
+  <table class="table table-bordered ">
+    <tr>
+      <td class="info small" style="background-color: #f2f2f2;"><strong>合計金額</strong></td>
+      <td class="small">¥<%= @total_price.floor.to_s(:delimited, delimiter: ',') %></td>
+    </tr>
+  </table>
+</div>
+
+
+
     </div>
+<div class = "col-xs-4 ">
+    <span>
+        <%= link_to "情報入力に進む", customers_path, class: "col-xs-12 btn btn-success"%>
+    </span>
+    </div>    
   </div>
 </main>

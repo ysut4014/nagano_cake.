@@ -3,6 +3,7 @@ class Admin::ItemsController < ApplicationController
 
   def index
     @items = Item.page(params[:page]).per(10)
+    
   end
 
   def new
@@ -22,16 +23,9 @@ class Admin::ItemsController < ApplicationController
     end
   end
   
-def destroy
-  @item = Item.find(params[:id])
-  begin
-    @item.destroy
-    redirect_to admin_items_path, notice: 'アイテムが削除されました'
-  rescue ActiveRecord::InvalidForeignKey
-    redirect_to admin_items_path, alert: 'アイテムを削除できません。関連するレコードが存在します。'
-  end
-end
   
+  
+
   
   def show
     @item = Item.find(params[:id])

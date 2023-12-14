@@ -29,9 +29,8 @@ end
     @genres = Genre.all
   end
   
-def with_tax_price
-  (price * 1.1).floor
-end
+
+
   private
 
   def item_params
