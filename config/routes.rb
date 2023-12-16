@@ -16,6 +16,7 @@ scope module: :public do
   get 'customers/:id', to: 'customers#show', as: 'customers_show'
   get 'home/about', to: 'homes#about', as: 'homes_about'
   get 'top', to: 'homes#top'
+  
   resources :items
   resources :genres
   resources :orders, only: [:index, :show, :new, :thanks]

@@ -6,18 +6,19 @@ class Public::CartItemsController < ApplicationController
     calculate_total_price
   end
 
-  def create
-    @cart_item = CartItem.new(cart_item_params)
-    @cart_item.customer_id = current_customer.id
-    @cart_item.item_id = params[:item_id]
-   if @cart_item.save
-    flash[:notice] = "#{@cart_item.item.name}をカートに追加しました。"
-    redirect_to customers_cart_items_path
-   else
-    flash[:alert] = "個数を選択してください"
-    render "customers/items/show"
-   end
-  end 
+def create
+  @cart_item = current_customer.cart_items.build(cart_item_params)
+  @cart_items = current_customer.cart_items.all
+  @cart_items.each do |cart_item|
+    if cart_item.item_id == @cart_item.item_id
+      new_amount = cart_item.amount + @cart_item.amount
+      cart_item.update_attribute(:amount, new_amount)
+      @cart_item.delete
+    end 
+  end
+  @cart_item.save
+  redirect_to :cart_items
+end
  def update
   @cart_item = CartItem.find(params[:id])
   @cart_item.update(cart_item_params)
