@@ -15,13 +15,13 @@
 
 
 				<% @cart_items.each do |cart_item| %>
-				<% @total+= (cart_item.item.unit_price_without_tax*1.1*cart_item.number_of_items).floor %>
+				<% @total+= (cart_item.item.price*1.1*cart_item.amount).floor %>
 
 					<tr>
-						<td><%= cart_item.item.item_name %>
-							<td><%= (cart_item.item.unit_price_without_tax*1.1).floor %></td>
-							<td><%= cart_item.number_of_items %></td>
-							<td><%= (cart_item.item.unit_price_without_tax*1.1*cart_item.number_of_items).floor %></td>
+						<td><%= cart_item.item.name %>
+							<td><%= (cart_item.item.price*1.1).floor %></td>
+							<td><%= cart_item.amount %></td>
+							<td><%= (cart_item.item.price*1.1*cart_item.amount).floor %></td>
 
 						</tr>
 						<% end %>
@@ -38,11 +38,11 @@
 						<tbody>
 							<tr>
 								<th>商品合計</th>
-								<td><%= @total_price %></td>
+								<td><%= @total %></td>
 							</tr>
 							<tr>
 								<th>請求額</th>
-								<td><%= @total_price+800 %></td>
+								<td><%= @total+800 %></td>
 							</tr>
 						</tbody>
 					</table>
@@ -59,11 +59,11 @@
 		<%= f.hidden_field :postal_code,:value => @order.postal_code %>
 		<%= f.hidden_field :name,:value => @order.name %>
 		<%= f.hidden_field :total_fee ,:value => @total %><br><br>
-		<div class="text-center">
-			<%= f.submit "購入を確定する", class: "btn btn-success text-cenrer btn-lg" %>
-		</div>
-		<% end %>
-		<%= form_for @order, url: new_public_order_path,method: :get do |f| %><!-- 入力画面に戻る用 -->
+  <div class="text-center">
+    <%= f.submit "購入を確定する", class: "btn btn-success text-center btn-lg" %>
+  </div>
+<% end %> 
+		<%= form_for @order, url: new_order_path,method: :get do |f| %><!-- 入力画面に戻る用 -->
         <%= f.hidden_field :order,:value => @order %>
         <%= f.submit '入力画面へ戻る' ,class: "btn btn-primary" %>
 <% end %>

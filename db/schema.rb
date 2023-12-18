@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_12_12_134025) do
+ActiveRecord::Schema.define(version: 2023_12_18_035601) do
 
   create_table "action_text_rich_texts", force: :cascade do |t|
     t.string "name", null: false
@@ -77,6 +77,8 @@ ActiveRecord::Schema.define(version: 2023_12_12_134025) do
     t.integer "amount", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.integer "order_id"
+    t.index ["order_id"], name: "index_cart_items_on_order_id"
   end
 
   create_table "customers", force: :cascade do |t|
@@ -117,7 +119,6 @@ ActiveRecord::Schema.define(version: 2023_12_12_134025) do
 
   create_table "orders", force: :cascade do |t|
     t.integer "customer_id", null: false
-    t.integer "shipping_id", null: false
     t.text "address", null: false
     t.string "postal_code", null: false
     t.string "name", null: false
@@ -126,6 +127,8 @@ ActiveRecord::Schema.define(version: 2023_12_12_134025) do
     t.integer "payment_method", default: 0, null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.integer "shipping_fee", null: false
+    t.integer "address_id"
   end
 
   create_table "orders_details", force: :cascade do |t|
@@ -152,6 +155,7 @@ ActiveRecord::Schema.define(version: 2023_12_12_134025) do
   add_foreign_key "addresses", "customers"
   add_foreign_key "cart_items", "customers"
   add_foreign_key "cart_items", "items"
+  add_foreign_key "cart_items", "orders"
   add_foreign_key "orders", "customers"
   add_foreign_key "orders_details", "items"
   add_foreign_key "orders_details", "orders"

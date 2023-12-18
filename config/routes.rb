@@ -19,7 +19,10 @@ scope module: :public do
   
   resources :items
   resources :genres
-  resources :orders, only: [:index, :show, :new, :thanks]
+  resources :orders do
+    post 'confirm', on: :collection
+    post 'log', on: :collection, as: 'log'
+  end
   resources :cart_items
       delete 'clear_cart', to: 'cart_items#clear_cart', as: 'clear_cart'
 
