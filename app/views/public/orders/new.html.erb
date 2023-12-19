@@ -1,19 +1,21 @@
 <main class="container">
   <div class="row">
     <div class="col-12">
+      <%= form_with(model: @order, url: log_orders_path, method: :post, local: true) do |f| %>
 
-      <%= form_with(model: @order, url:  log_orders_path, method: :post) do |f| %>
         <h5 class="p-5"><strong>注文情報入力</strong></h5>
         <div class="col-4">
           <strong>支払方法</strong>
         </div>
 
 <div class="col-4 ml-3">
-<%= f.radio_button :payment_method, "クレジットカード", checked: @order&.payment_method == 0 %>
+<%= f.radio_button :payment_method, "クレジットカード", checked: @order&.payment_method == "クレジットカード" %>
 <%= f.label :payment_method_credit_card, "クレジットカード" %><br>
 
-  <%= f.radio_button :payment_method, "銀行振込", checked: @order&.payment_method == 1 %>
+<%= f.radio_button :payment_method, "銀行振込", checked: @order&.payment_method == "銀行振込" %>
 <%= f.label :payment_method_transfer, "銀行振込" %>
+
+
 </div>
 
         <h5 class="p-5"><strong>お届け先</strong></h5>
