@@ -8,10 +8,17 @@ class Public::CartItemsController < ApplicationController
 
 def create
   @cart_item = current_customer.cart_items.find_or_initialize_by(item_id: cart_item_params[:item_id])
+
+  # もし @cart_item.amount が現在 nil なら、0 で初期化する
+  @cart_item.amount ||= 0
+
+  # 初期化された @cart_item.amount に対して加算を行う
   @cart_item.amount += cart_item_params[:amount].to_i
+
   @cart_item.save
   redirect_to cart_items_path
 end
+
 
  def update
   @cart_item = CartItem.find(params[:id])

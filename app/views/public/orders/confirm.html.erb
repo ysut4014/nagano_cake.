@@ -1,6 +1,7 @@
 <div class="container takasa">
 	<h2>注文情報確認</h2>
-	<%= form_for  @order,url: {action: 'create'} do |f| %>
+	<%= form_for @order, url: { action: 'create' } do |f| %>
+	<%= debug @order %>
 	<!-- テーブル -->
     <div class="row">
         <div class="col-xs-8" style="margin-bottom: 20px;">
@@ -18,16 +19,19 @@
 				<% @cart_items.each do |cart_item| %>
 				<% @total+= (cart_item.item.price*1.1*cart_item.amount).floor %>
 
-					<tr>
-						<td>
-							
-							
-							<%= cart_item.item.name %>
-							<td><%= (cart_item.item.price*1.1).floor %></td>
-							<td><%= cart_item.amount %></td>
-							<td><%= (cart_item.item.price*1.1*cart_item.amount).floor %></td>
-
-						</tr>
+<tr>
+  <td>
+    <% if cart_item.item.image.attached? %>
+      <%= image_tag(url_for(cart_item.item.image), size: '30x25', alt: cart_item.item.name, class: "img-thumbnail") %>
+    <% else %>
+      <%= image_tag('no_image.jpg', size: '30x25', alt: 'No Image', class: "img-thumbnail") %>
+    <% end %>							
+    <%= cart_item.item.name %>
+  </td>
+  <td><%= number_to_currency((cart_item.item.price * 1.1).floor) %></td>
+  <td><%= cart_item.amount %></td>
+  <td><%= number_to_currency((cart_item.item.price * 1.1 * cart_item.amount).floor) %></td>
+</tr>
 						<% end %>
 					</tbody>
                 </table>
@@ -64,7 +68,7 @@
     <%= f.hidden_field :name,:value => @order.name %>
     <%= f.hidden_field :total_price ,:value => @total %><br><br>
     <div class="text-center">
-      <%= f.submit "購入を確定する", class: "btn btn-success text-center btn-lg" %>
+      <%= f.submit "注文を確定する", class: "btn btn-success text-center btn-lg" %>
     </div>
   <% end %>
   <%= form_for @order, url: new_order_path, method: :get do |f| %>

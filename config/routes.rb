@@ -10,6 +10,7 @@ devise_for :customers, skip: [:passwords], controllers: {
 
   # 会員側のルーティング設定
 scope module: :public do
+  get 'orders/thanks', to: 'orders#thanks', as: 'orders_thanks'
   get 'customers/quit', to: 'customers#quit', as: 'customer_quit'
   get '/about', to: 'your_controller#your_action', as: 'about'
   get 'quit_confirmation', to: 'customers#quit_confirmation', as: 'quit_confirmation'
@@ -50,11 +51,12 @@ devise_for :admin, skip: [:registrations, :passwords], controllers: {
 }  
 namespace :admin do
   get 'top', to: 'homes#top', as: 'top'
+  resources :orders
   resources :customers
   resources :genres
   resources :items
-  resources :orders, only: [:show, :index]
-  
+  resources :addresses
+
   devise_scope :admin do
     get '/sign_out' => 'sessions#destroy'
   end

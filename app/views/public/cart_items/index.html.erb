@@ -22,11 +22,11 @@
                 <div style="display: flex; align-items: center;">
                   <% if cart_item.item.image.attached? %>
                     <p class="item-content1" style="margin-right: 10px; margin-bottom: 0;">
-                      <%= image_tag cart_item.item.image, size: '30x25' %>
+                      <%= image_tag cart_item.item.image, size: '30x25' ,alt: cart_item.item.name, class: "img-thumbnail" %>
                     </p>
                   <% else %>
                     <p class="item-content1" style="margin-right: 10px; margin-bottom: 0;">
-                      <%= image_tag 'no_image.jpg', size: '30x25' %>
+                      <%= image_tag 'no_image.jpg', size: '30x25' ,alt: cart_item.item.name, class: "img-thumbnail" %>
                     </p>                    
                   <% end %>
                   <%= cart_item.item.name %>
@@ -53,13 +53,7 @@
         </div>
       <% end %>
       <% if @cart_items.present? %>
-        <div class="row">
-          <div class="col-xs-8">
-            <span>
-              <%= link_to "買い物を続ける", items_path, class: "btn btn-primary", data: {"turbolinks" => false} %>
-            </span>
-          </div>
-        </div>
+
         <div class="col-md-3 float-right">
           <table class="table table-bordered ">
             <tr>
@@ -68,11 +62,21 @@
             </tr>
           </table>
         </div>
-        <div class="col-xs-4 ">
+        
+        <div class="row">
+          <div class="col-xs-8">
+            <span>
+              <%= link_to "買い物を続ける", items_path, class: "btn btn-primary", data: {"turbolinks" => false} %>
+            </span>
+          </div>
+        </div>        
+        <div class="row">
+        <div class="col-xs-8">
           <span>
-            <%= link_to "情報入力に進む", new_order_path, class: "col-xs-12 btn btn-success" %>
+            <%= link_to "情報入力に進む", new_order_path, class: " btn btn-success" %>
           </span>
-        </div>    
+        </div>            
+        </div>        
       </div>
     <% else %>
       <p>カートに商品がありません。</p>

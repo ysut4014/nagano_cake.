@@ -1,45 +1,45 @@
 class Public::OrdersController < ApplicationController
   # ...
 
-def show
-  if params[:id] == "log"
-    # Handle the case where the id is "log"
-  else
-    @order = Order.find(params[:id])
-    if @order.nil?
-      flash[:alert] = '指定された注文が見つかりませんでした。'
-      redirect_to root_path # もしくは適切な処理
-    end
+  def thanks
   end
-end
 
+  def show
+    @order = Order.find(params[:id])
+  end
 
+  def index
+    @orders = Order.where(customer_id: current_customer.id).order(created_at: :desc).page(params[:page]).per(10)
+  end
 
   def new
     @order = Order.new
+    @addresses = current_customer.addresses
   end
 
-  def confirm
-    @order = Order.new(order_params)
-    @order.customer_id = current_customer.id
+def confirm
+  @order = Order.new(order_params)
+  @order.postal_code = current_customer.postal_code
+  @order.address = current_customer.address
+  @order.name = current_customer.first_name + current_customer.last_name
 
-    if current_customer.address.present?
-      @order.address = current_customer.address
-    else
-      Rails.logger.debug("Current customer address is nil.")
-    end
+  # Assuming you have a method to retrieve cart items for the current customer
+  @cart_items = current_customer.cart_items
 
-    # Assign @cart_items properly
-    @cart_items = current_customer.cart_items || []
-
-    # Calculate @total
-    @total = 0
-    @cart_items.each do |cart_item|
-      @total += (cart_item.item.price * 1.1 * cart_item.amount).floor
-    end
-
-    # Use @order.address directly in the view
+  # Ensure @cart_items is not nil
+  if @cart_items.nil? || @cart_items.empty?
+    flash[:alert] = 'カートに商品がありません。'
+    redirect_to root_path
+    return
   end
+
+
+  @total = 0
+  @cart_items.each do |cart_item|
+    @total += (cart_item.item.price_without_tax * 1.1).floor * cart_item.amount
+  end
+end
+
 
   def create
     @order = Order.new
@@ -86,7 +86,7 @@ end
     end
 
     if session[:order][:postal_code].presence && session[:order][:address].presence && session[:order][:name].presence
-      redirect_to log_orders_path
+      redirect_to orders_thanks_path
     else
       redirect_to customers_orders_about_path
     end

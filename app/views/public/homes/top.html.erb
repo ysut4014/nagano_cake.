@@ -1,0 +1,38 @@
+<div class="plate mx-auto" id="cork">
+  <span>Welcome!!</span>
+  </div>
+<div class="home-box mx-auto my-3">
+    <p class="home-text">ようこそ、ながのCAKEへ！<br>
+    このサイトは、ケーキ販売のECサイトになります。
+    会員でない方も商品の閲覧はできますが、<br>
+    購入には会員登録が必要になります。
+    </p>
+  <div class="slide">
+
+</div>
+</div>
+
+
+<div class="container new-item">
+  <h2>新着商品</h2>
+  <div class="row">
+    <% @items.each do |item| %>
+      <div class="col-md-3">
+        <div class="mb-4 box-shadow">
+          <%= link_to item_path(item) do %>
+            <% if item.image.attached? %>
+              <%= image_tag(item.image, class: "card-img-top", alt: item.name, size: "300x100") %>
+            <% else %>
+              <%= image_tag('no_image.jpg', class: "card-img-top", alt: "No Image", size: "300x100") %>
+            <% end %>
+            <div class="card-body">
+              <p class="card-text"><%= item.name %></p>
+              <p class="card-text">¥<%= item.price %></p>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+  <div class="all-items-show-button"><%= link_to "全ての商品をみる", items_path %></div>
+</div>
