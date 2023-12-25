@@ -18,22 +18,27 @@
 </div>
 
         <h5 class="p-5"><strong>お届け先</strong></h5>
-  <div class="col-4 ml-3">
-    <%= f.radio_button :address_number, "1", checked: "checked" %>
-    <%= f.label :address_number, "ご自身の住所" %><br>
-    <!-- ... 他の住所情報フィールド ... -->
+    <div class="col-4 ml-3">
+      <%= f.radio_button :address_number, "1", checked: "checked" %>
+      <%= f.label :address_number, "ご自身の住所" %><br>
+      <div style="margin-left: 70px;">
+        <%= current_customer.postal_code %> <%= current_customer.address %><%= current_customer.last_name %><%= current_customer.first_name %>
+      </div>
 
-    <%= f.radio_button :address_number, "registered_address" %>
-    <%= f.label :address_number, "登録住所から選択" %><br>
-    <!-- ... 登録住所を選択するためのフィールド ... -->
+      <%= f.radio_button :address_number ,2%>
+      <%= f.label :address_number, "登録住所から選択" %>
+      <div style="margin-left: 70px;">
+        <%= f.select :address_id, options_from_collection_for_select(Address.all, :id, :address_display) %>
+      </div>
 
-    <%= f.radio_button :address_number, "new_address" %>
+
+    <%= f.radio_button :address_number,3 %>
     <%= f.label :address_number, "新しいお届け先" %>
     <!-- ... 新しいお届け先のためのフィールド ... -->
   </div>
 
-<div class="form-group row">
-  <div class="col-md-12 d-flex  align-items-center" style="font-size: smaller; font-weight: bold; margin-top: 8px;">
+<div style="margin-left:70px;">
+    <div class="col-md-12 d-flex  align-items-center" style="font-size: smaller; font-weight: bold; margin-top: 8px;">
     <%= f.label :"郵便番号(ハイフンなし)", class: "control-label" %>
     <div class="col-md-6">
       <%= f.text_field :postal_code, class: "form-control", placeholder: "郵便番号(ハイフンなし)", style: "width: 70%;" %>
@@ -41,7 +46,7 @@
   </div>
 </div>
 
-<div class="form-group row">
+<div style="margin-left:70px;">
   <div class="col-md-12 d-flex  align-items-center" style="font-size: smaller; font-weight: bold; margin-top: 8px;">
     <%= f.label :住所, class: "control-label" %>
     <div class="col-md-6">
@@ -50,7 +55,7 @@
   </div>
 </div>
 
-<div class="form-group row">
+<div style="margin-left:70px;">
   <div class="col-md-12 d-flex  align-items-center" style="font-size: smaller; font-weight: bold; margin-top: 8px;">
     <%= f.label :宛名, class: "control-label" %>
     <div class="col-md-6">

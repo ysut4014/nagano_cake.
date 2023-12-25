@@ -1,18 +1,11 @@
 class Order < ApplicationRecord
-  VALID_POSTAL_CODE_REGEX = /\A\d{7}\z/
-  
+
   belongs_to :customer
   has_many :order_details, dependent: :destroy
   has_many :cart_items
   has_many :items, through: :order_details
   
-  validates :total_price, presence: true
-  validates :payment_method, presence: true
-  validates :shipping_fee, presence: true
-  validates :address, length: { in: 1..48 }
-  validates :postal_code, format: { with: VALID_POSTAL_CODE_REGEX }
-  validates :name, length: { in: 1..32 }
-  validates :status, presence: true
+
   
   def self.ransackable_attributes(auth_object = nil)
     ["address", "address_id", "address_number", "created_at", "customer_id", "id", "name", "payment_method", "postal_code", "shipping_fee", "status", "total_price", "updated_at"]

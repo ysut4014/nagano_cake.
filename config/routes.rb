@@ -10,6 +10,7 @@ devise_for :customers, skip: [:passwords], controllers: {
 
   # 会員側のルーティング設定
 scope module: :public do
+  get '/mypage', to: 'mypage#index', as: 'mypage'
   get 'orders/thanks', to: 'orders#thanks', as: 'orders_thanks'
   get 'customers/quit', to: 'customers#quit', as: 'customer_quit'
   get '/about', to: 'your_controller#your_action', as: 'about'
@@ -17,7 +18,7 @@ scope module: :public do
   get 'customers/:id', to: 'customers#show', as: 'customers_show'
   get 'home/about', to: 'homes#about', as: 'homes_about'
   get 'top', to: 'homes#top'
-  
+  resources :customers
   resources :items
   resources :genres
   resources :orders do

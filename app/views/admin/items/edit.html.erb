@@ -55,17 +55,13 @@
 
         <div class="row mb-3">
           <div class="col-md-3">
-            <p>販売ステータス</p>
+  <%= f.label :販売ステータス %>
           </div>
-          <div class="col-md-1">
-            <%= f.radio_button :is_sold_out, "sale", class: "form-check-input" %>
-            <%= f.label :is_sold_out, "販売中", class: "form-check-label" %>
-          </div>
-          <div class="col-md-2">
-            <%= f.radio_button :is_sold_out, "sales_stop", class: "form-check-input" %>
-            <%= f.label :is_sold_out, "販売停止中", class: "form-check-label" %>
-          </div>
-        </div>
+          <div class="col-md-3">
+  <%= f.select :is_sold_out, options_for_select([["販売中", false], ["販売不可", true]]),  { prompt: '選択してください' }, class: "form-control", required: true %>
+</div>
+         </div>
+
 
         <div class="row mb-3">
           <div class="col-md-3 text-center mx-auto">

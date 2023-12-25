@@ -2,7 +2,8 @@
   <div class="row d-flex align-items-center">
     <div class="col-12">
       <h5 class="p-5"><strong>商品一覧</strong></h5>
-      <%= link_to "新規商品登録", new_admin_item_path, class: "btn btn-primary" %>     
+      <%= link_to "新規商品登録", new_admin_item_path, class: "btn btn-primary" %> 
+
       <table class="table">
         <thead>
           <tr>
@@ -11,6 +12,7 @@
             <th>税抜価格</th>
             <th>ジャンル</th>
             <th>ステータス</th>
+            <th></th>
           </tr>
         </thead>
         <tbody>
@@ -20,20 +22,20 @@
               <td><%= link_to item.name, admin_item_path(item) %></td>
               <td><%= item.price %>円</td>
               <td><%= item.genre.name %></td>
-              <td><%= item.is_sold_out? ? '販売停止中' : '販売中' %></td>
-<td><%= link_to '削除する', admin_item_path(item), method: :delete, data: { confirm: '本当に削除しますか？' }, class: 'btn btn-danger text-center' %></td>
-
+              <td style="color: <%= item.is_sold_out? ? 'grey' : 'green' %>;">
+                <%= item.is_sold_out? ? '販売停止中' : '販売中' %>
+              </td>
+              <td>
+                <%= link_to '削除する', admin_item_path(item), method: :delete, data: { confirm: '本当に削除しますか？' }, class: 'btn btn-danger text-center' %>
+              </td>
             </tr>
-            
-            
           <% end %>
-          
-          
-          
         </tbody>
       </table>
-      <div style="text-align: center;"><%= paginate @items %></div>
-      
+
+      <div style="text-align: center;">
+        <%= paginate @items %>
+      </div>
     </div>
   </div>
 </main>

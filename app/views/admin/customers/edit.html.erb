@@ -5,16 +5,15 @@
 
       <%= form_for(@customer, url: admin_customer_path(@customer), method: :patch) do |f| %>
 
-        
         <div class="row">
-          <div class="col-md-3 mb-3 ">
+          <div class="col-md-3 mb-3">
             <p>会員ID</p>
           </div>
           <div class="col-md-3 mb-3">
-            <%= @customer.id %> 
+            <%= @customer.id %>
           </div>
         </div>
-        
+
         <div class="row">
           <div class="col-md-3 mb-3">
             <%= f.label :name, "名前" %>
@@ -27,7 +26,7 @@
             <%= f.text_field :first_name, class: "form-control" %>
           </div>
         </div>
-        
+
         <div class="row">
           <div class="col-md-3 mb-3">
             <%= f.label :name, "フリガナ" %>
@@ -40,7 +39,7 @@
             <%= f.text_field :first_name_kana, class: "form-control" %>
           </div>
         </div>
-        
+
         <div class="row">
           <div class="col-md-3 mb-3">
             <%= f.label :postal_code, "郵便番号" %>
@@ -49,7 +48,7 @@
             <%= f.text_field :postal_code, class: "form-control" %>
           </div>
         </div>
-        
+
         <div class="row">
           <div class="col-md-3 mb-3">
             <%= f.label :addresses, "住所" %>
@@ -58,7 +57,7 @@
             <%= f.text_field :address, class: "form-control" %>
           </div>
         </div>
-        
+
         <div class="row">
           <div class="col-md-3 mb-3">
             <%= f.label :telephone_number, "電話番号" %>
@@ -67,7 +66,7 @@
             <%= f.text_field :telephone_number, class: "form-control" %>
           </div>
         </div>
-        
+
         <div class="row">
           <div class="col-md-3 mb-3">
             <%= f.label :email, "メールアドレス" %>
@@ -81,16 +80,8 @@
           <div class="col-md-3 mb-3">
             <%= f.label :email, "会員ステータス" %>
           </div>
-          <div class="col-md-1">
-            <%= f.radio_button :is_active, "sale", class: "form-check-input" %>
-            <%= f.label :is_active, "有効", class: "form-check-label" %>
-          </div>
-
-          <div class="col-md-2">
-            <%= f.radio_button :is_active, "sales_stop", class: "form-check-input" %>
-            <%= f.label :is_active, "無効", class: "form-check-label" %>
-           </div>
-         </div>
+          <div class="col-md-3">
+            <td><%= f.select :is_active, [["有効会員","true"], ["退会済み","false"]], class: "form-control" %></td>
           </div>
         </div>
 

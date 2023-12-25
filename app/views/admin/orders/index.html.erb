@@ -1,40 +1,27 @@
-<div class="pull-right">
-  <%= search_form_for(@search, url: admin_orders_path) do |f| %>
-    <%= f.label :name, "注文履歴キーワード" %>
-    <%= f.search_field :name_cont %>
-    <%= f.submit %>
-  <% end %>
-</div>
-<div class="container">
-  <div class="row">
-    <div class="col-xs-10 ">
-      <h2>注文一覧</h2>
-
-
-    <div class="order-table">
-      <table class="table">
-        <thead>
-          <tr>
-            <th>購入日時</th>
-            <th>購入者</th>
-            <th>注文個数</th>
-            <th>注文ステータス</th>
-          </tr>
-        </thead>
-
-        <tbody>
-          <% @orders.each do |order| %>
-            <tr>
-              <td><%= link_to order.created_at.strftime("%Y-%m-%d %H:%M:%S"), admin_order_path(order) %></td>
-              <td><%= order.customer.last_name + "　" + order.customer.first_name %></td>
-              <td><%= order.order_details.sum(:quantity) %></td>
-              <td><%= order.status %></td>
-            </tr>
-            <% end %>
-            <%= paginate @orders %>
-        </tbody>
-      </table>
-    </div>
-  </div>
-</div>
+<div class="container takasa">
+	<h2><i class="fas fa-file-invoice"></i>注文履歴一覧</h2>
+	  <table class="table-bordered">
+	  <tr>
+        <th>注文日</th>
+        <th>配送先</th>
+        <th>注文商品</th>
+        <th>支払金額</th>
+        <th>ステータス</th>
+        <th>注文詳細</th>
+      </tr>
+      <% @order.each do |order| %>
+      <tr>
+        <td><%= order.created_at.strftime('%Y/%m/%d') %></td>
+        <td><%= order.address %></td>
+        <td><% order.order_items.each do |order_item| %>
+          <%= order_item.item.item_name %>/
+        <% end %>
+        </td>
+        <td><%= order.total_price %></td>
+        <td><%= order.status %></td>
+        <td><%= link_to "注文詳細", public_order_path(order) %></td>
+      </tr>
+    <% end %>
+    </table>
+	</table>
 </div>

@@ -41,7 +41,7 @@ def confirm
 end
 
 
-  def create
+def create
     @order = Order.new
     @customer = current_customer
 
@@ -54,7 +54,14 @@ end
     sum = 0
     cart_items.each do |cart_item|
       sum += (cart_item.item.price_without_tax * 1.1).floor * cart_item.amount
+    if @order.save
+      # 注文が保存された場合の処理
+      redirect_to orders_thanks_path
+    else
+      # 注文が保存できなかった場合の処理
+      render :new
     end
+  end
 
     session[:order][:shipping_fee] = 800
     session[:order][:total_price] = sum + session[:order][:shipping_fee]
