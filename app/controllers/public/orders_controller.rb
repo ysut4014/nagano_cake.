@@ -1,5 +1,70 @@
 class Public::OrdersController < ApplicationController
-  # ...
+  include Public::OrdersHelper
+  before_action :authenticate_customer!
+  before_action :cart_check, only: [:new, :confirm, :create]
+
+  def cart_check
+    unless CartItem.find_by(customer_id: current_customer.id)
+      flash[:danger] = "カートに商品がない状態です"
+      redirect_to root_url
+    end
+  end
+
+  def new
+    @order = Order.new
+    @addresses = current_customer.addresses
+  end
+
+  def confirm
+    @order = Order.new
+    @cart_items = CartItem.where(customer_id: current_customer.id)
+    customer = current_customer
+    address_option = params[:order][:address_option].to_i
+
+    @order.payment_method = params[:order][:payment_method].to_i
+    @order.temporary_information_input(customer.id)
+
+    if address_option == 0
+      @order.order_in_address_display(customer.postal_code, customer.address, customer.full_name)
+    elsif address_option == 1
+      shipping = Address.find(params[:order][:registration_address])
+      @order.order_in_address_display(shipping.postal_code, shipping.address, shipping.name)
+    elsif address_option == 2
+      @order.order_in_address_display(params[:order][:postal_code], params[:order][:address], params[:order][:name])
+    else
+    end
+    unless @order.valid?
+      flash[:danger] = "お届け先の内容に不備があります<br>・#{@order.errors.full_messages.join('<br>・')}"
+      p @order.errors.full_messages
+      redirect_back(fallback_location: root_path)
+    end
+    # render plain: @order.inspect
+  end
+
+def create
+  @order = Order.new(order_params)
+  @order.customer_id = current_customer.id
+  @order.shipping_fee = 800
+
+  if @order.save
+    @cart_items = CartItem.where(customer_id: current_customer.id)
+    @cart_items.each do |cart_item|
+      order_detail = OrderDetail.new
+        order_detail = OrderDetail.new
+        order_detail.item_id = cart_item.item_id
+        order_detail.order_id = @order.id
+        order_detail.amount = cart_item.amount
+        order_detail.price = change_price(cart_item.item.price)
+        order_detail.making_status = 0
+      if order_detail.save
+        @cart_items.destroy_all
+      end
+    end
+    redirect_to orders_thanks_path
+  else
+    # エラー時の処理
+  end
+end
 
   def thanks
   end
@@ -9,97 +74,18 @@ class Public::OrdersController < ApplicationController
   end
 
   def index
-    @orders = Order.where(customer_id: current_customer.id).order(created_at: :desc).page(params[:page]).per(10)
+    @orders = Order.where(customer_id: current_customer.id).order(created_at: :desc)
+  end
+  
+  def destroy_all
+    Order.destroy_all
+    redirect_to orders_path, notice: '全ての注文を削除しました。'
   end
 
-  def new
-    @order = Order.new
-    @addresses = current_customer.addresses
-  end
-
-def confirm
-  @order = Order.new(order_params)
-  @order.postal_code = current_customer.postal_code
-  @order.address = current_customer.address
-  @order.name = current_customer.first_name + current_customer.last_name
-
-  # Assuming you have a method to retrieve cart items for the current customer
-  @cart_items = current_customer.cart_items
-
-  # Ensure @cart_items is not nil
-  if @cart_items.nil? || @cart_items.empty?
-    flash[:alert] = 'カートに商品がありません。'
-    redirect_to root_path
-    return
-  end
-
-
-  @total = 0
-  @cart_items.each do |cart_item|
-    @total += (cart_item.item.price_without_tax * 1.1).floor * cart_item.amount
-  end
-end
-
-
-def create
-    @order = Order.new
-    @customer = current_customer
-
-    # sessionを使ってデータを一時保存
-    session[:order] = Order.new
-
-    cart_items = current_customer.cart_items
-
-    # total_paymentのための計算
-    sum = 0
-    cart_items.each do |cart_item|
-      sum += (cart_item.item.price_without_tax * 1.1).floor * cart_item.amount
-    if @order.save
-      # 注文が保存された場合の処理
-      redirect_to orders_thanks_path
-    else
-      # 注文が保存できなかった場合の処理
-      render :new
-    end
-  end
-
-    session[:order][:shipping_fee] = 800
-    session[:order][:total_price] = sum + session[:order][:shipping_fee]
-    session[:order][:status] = 0
-    session[:order][:customer_id] = current_customer.id
-    # ラジオボタンで選択された支払方法のenum番号を渡している
-    session[:order][:payment_method] = params[:method].to_i
-
-    # ラジオボタンで選択されたお届け先によって条件分岐
-    destination = params[:a_method].to_i
-
-    if destination == 0
-      # 自身の住所を選択
-      session[:order][:postal_code] = @customer.postal_code
-      session[:order][:address] = @customer.address
-      session[:order][:name] = @customer.last_name + @customer.first_name
-    elsif destination == 1
-      # 登録住所を選択
-      address = ShippingAddress.find(params[:shipping_address_for_order])
-      session[:order][:postal_code] = address.postal_code
-      session[:order][:address] = address.address
-      session[:order][:name] = address.name
-    elsif destination == 2
-      # 新しいお届け先を選択
-      session[:new_address] = 2
-      session[:order][:postal_code] = params[:postal_code]
-      session[:order][:address] = params[:address]
-      session[:order][:name] = params[:name]
-    end
-
-    if session[:order][:postal_code].presence && session[:order][:address].presence && session[:order][:name].presence
-      redirect_to orders_thanks_path
-    else
-      redirect_to customers_orders_about_path
-    end
-  end
+  private
 
   def order_params
-    params.require(:order).permit(:payment_method, :address_number, :address_id, :postal_code, :name)
+    params.require(:order).permit(:postal_code, :address, :sname, :total_price, :payment_method, :name)
   end
+
 end

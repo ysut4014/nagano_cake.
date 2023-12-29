@@ -2,6 +2,7 @@ class Admin::OrdersController < ApplicationController
 	before_action :authenticate_admin!
 
 	def index
+	     @orders = Order.includes(order_details: :item).all
 		@search = Order.ransack(params[:q])
     @orders = @search.result.page(params[:page]).per(10)
 	end
@@ -14,28 +15,27 @@ class Admin::OrdersController < ApplicationController
 	def total(items_total_price)
 
 	end
-
+	
 def update
   @order = Order.find(params[:id])
-  @order.update(order_params)
+@order_details = OrderDetail.where(order_id: @order)
 
-  if @order.status == "製作中"  # Assuming 'status' is the correct attribute
-    # Your logic here
+
+if @order.update(status_params)
+  if @order.status.include?("入金確認")
+    # Make sure @order_details is loaded as a collection of OrderDetail instances
+    @order.order_details.update_all(making_status: OrderDetail.making_statuses[:製作中])
+  end
+end
+
+end
+  def total_amount
+    order.sum(:amount)
   end
 
-  redirect_to admin_order_path(@order)
-end
-
 private
-
-def order_params
-  params.require(:order).permit(:status)
+def status_params
+  params.require(:order).permit(:order_status)
 end
-
-  private
-def order_params
-  params.require(:order).permit(:status)
-end
-
 
 end

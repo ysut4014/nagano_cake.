@@ -1,27 +1,28 @@
 <div class="container takasa">
-	<h2><i class="fas fa-file-invoice"></i>注文履歴一覧</h2>
-	  <table class="table-bordered">
-	  <tr>
-        <th>注文日</th>
-        <th>配送先</th>
-        <th>注文商品</th>
-        <th>支払金額</th>
-        <th>ステータス</th>
-        <th>注文詳細</th>
-      </tr>
-      <% @order.each do |order| %>
-      <tr>
-        <td><%= order.created_at.strftime('%Y/%m/%d') %></td>
-        <td><%= order.address %></td>
-        <td><% order.order_items.each do |order_item| %>
-          <%= order_item.item.item_name %>/
-        <% end %>
-        </td>
-        <td><%= order.total_price %></td>
-        <td><%= order.status %></td>
-        <td><%= link_to "注文詳細", public_order_path(order) %></td>
-      </tr>
+  <h2>注文履歴一覧</h2>
+  <table class="table-bordered">
+    <tr>
+      <th>注文日</th>
+      <th>配送先</th>
+      <th>注文商品</th>
+      <th>支払金額</th>
+      <th>ステータス</th>
+      <th>注文詳細</th>
+    </tr>
+    <% @orders.each do |order| %>
+<tr>
+  <td><%= order.created_at.strftime('%Y/%m/%d') %></td>
+  <td><%= order.address %></td>
+  <td>
+    <% order.order_details.each do |order_detail| %>
+      <%= order_detail.item.name %>
+      <!-- Add a separator if needed, e.g., / -->
     <% end %>
-    </table>
-	</table>
+  </td>
+  <td><%= order.total_price %>></td>
+  <td><%= order.status %></td>
+  <td><%= link_to "注文詳細", admin_order_path(order) %></td>
+</tr>
+    <% end %>
+  </table>
 </div>

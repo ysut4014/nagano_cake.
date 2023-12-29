@@ -21,13 +21,25 @@ end
     end
     
 
-def quit
-end
+    def quit
 
-def quit_destroy
-  current_customer.destroy
-  redirect_to root_path, notice: '退会が完了しました。ご利用いただきありがとうございました。'
-end
+    end
+
+    # 退会アクション
+    def withdraw
+        @customer = current_customer
+        
+        # is_customer_statusカラムにフラグを立てる(default→false(有効状態)をtrue(無効状態)にする）
+        @customer.update(is_active: false)
+        # ログアウトさせる
+        reset_session
+
+        flash[:notice] = "ありがとうございました。またのご利用を心よりお待ちしております。"
+        redirect_to root_path
+    end
+
+
+
 private
 
 def customer_params
