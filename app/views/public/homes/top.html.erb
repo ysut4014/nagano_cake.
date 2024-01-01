@@ -17,8 +17,9 @@
   <h2>新着商品</h2>
   <div class="row">
     <% @items.each do |item| %>
-      <div class="col-md-3">
-        <div class="mb-4 box-shadow">
+      <div class="col-md-3 mb-4">
+        <div class="card box-shadow">
+
           <%= link_to item_path(item) do %>
             <% if item.image.attached? %>
               <%= image_tag(item.image, class: "card-img-top", alt: item.name, size: "300x100") %>

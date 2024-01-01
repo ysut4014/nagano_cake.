@@ -36,16 +36,15 @@
      <table class="table-condensed">
           <tr>
             <th class="shipping-link">配送先　　</th>
-            <th><%= link_to "一覧を見る", customer_addresses_path(current_customer), class: "btn btn-info" %></th>
+            <th><%= link_to "一覧を見る", addresses_path(current_customer), class: "btn btn-info" %></th>
 
           </tr></brs>
         <tbody>
           <tr>
             <th class="shipping-link">注文履歴　　</th>
-            <th><%= link_to "一覧を見る", customer_orders_path(current_customer), class: "btn btn-info" %></th>
+            <th><%= link_to "一覧を見る", orders_path(current_customer), class: "btn btn-info" %></th>
           </tr>
           <tr>
-            <th><%= link_to '退会する', quit_page_customer_path, method: :get %></th>      
 
           </tr>
         </tbody>

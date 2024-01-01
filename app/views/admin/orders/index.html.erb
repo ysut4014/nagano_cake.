@@ -9,20 +9,16 @@
       <th>ステータス</th>
       <th>注文詳細</th>
     </tr>
-    <% @orders.each do |order| %>
-<tr>
-  <td><%= order.created_at.strftime('%Y/%m/%d') %></td>
-  <td><%= order.address %></td>
-  <td>
-    <% order.order_details.each do |order_detail| %>
-      <%= order_detail.item.name %>
-      <!-- Add a separator if needed, e.g., / -->
-    <% end %>
-  </td>
-  <td><%= order.total_price %>></td>
-  <td><%= order.status %></td>
-  <td><%= link_to "注文詳細", admin_order_path(order) %></td>
-</tr>
-    <% end %>
+<% @orders.each do |order| %>
+  <tr>
+    <td><%= order.created_at.strftime("%Y-%m-%d %H:%M:%S") %></td>
+    <td><%= order.customer.last_name + "　" + order.customer.first_name %></td>
+    <td><%= order.order_details.sum(:amount) %></td>
+    <td><%= "#{order.total_price}円" %></td>
+    <td><%= order.status %></td>
+    <td><%= link_to "表示する", admin_order_path(order), class: "btn btn-primary" %></td>
+  </tr>
+<% end %>
+            <%= paginate @orders %>
   </table>
 </div>

@@ -25,6 +25,7 @@ class Admin::GenresController < ApplicationController
   end  
   
   def show
+    @genre = Genre.find(params[:id])
     @item = Item.find(params[:id])
   end
   

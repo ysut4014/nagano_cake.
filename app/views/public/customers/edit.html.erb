@@ -56,7 +56,7 @@
         <tbody>
           <tr>
             <th class="shipping-link">配送先</th>
-            <td><%= link_to "一覧を見る", customer_addresses_path(current_customer), class: "btn btn-info" %></td>
+            <td><%= link_to "一覧を見る", customer_address_path(current_customer), class: "btn btn-info" %></td>
           </tr>
           <tr>
             <th class="shipping-link">注文履歴</th>
@@ -69,7 +69,13 @@
         <%= submit_tag '更新する', class: 'btn btn-success' %>
         <%= link_to 'キャンセル', customers_show_path(current_customer), class: 'btn btn-secondary' %>
       </div>
+        <div class="actions ml-auto"> 
+              <%= link_to '退会する', quit_path(current_customer), method: :get %>
+
+      </div>
       <% end %>
     </div>
-  </form>
+
+  </form>        
+
 </main>

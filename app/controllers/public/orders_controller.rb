@@ -10,6 +10,8 @@ class Public::OrdersController < ApplicationController
     end
   end
 
+
+
   def new
     @order = Order.new
     @addresses = current_customer.addresses

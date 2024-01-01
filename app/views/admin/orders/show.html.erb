@@ -47,7 +47,6 @@
             <th>単価（税込）</th>
             <th>数量</th>
             <th>小計</th>
-            <th>製作ステータス</th>
           </tr>
         </thead>
 
@@ -58,15 +57,13 @@
             <td><%= order_detail.item.name %></td>
             <td><%= (order_detail.price).floor.to_s(:delimited, delimiter: ',') %></td>
             <td><%= order_detail.amount %></td>
-            <td></td>
+            <td><%= (order_detail.price).floor*order_detail.amount %></td>
 <td>
 <%= form_for(@order, url: admin_order_path(@order), method: :patch) do |f| %>
-  <%= f.fields_for :order_details do |order_detail_form| %>
-    <%= order_detail_form.hidden_field :order_detail_id, value: order_detail.id %>
-    <%= order_detail_form.select :making_status, OrderDetail.all.making_statuses.keys.to_a %>
-  <% end %>
+<%= f.fields_for :order_details do |order_detail_form| %>
+  <%= order_detail_form.hidden_field :order_detail_id, value: order_detail.id %>
+<% end %>
 
-  <%= f.submit '更新', class: 'btn btn-success' %>
 <% end %>
 
 </td>
@@ -77,7 +74,7 @@
       </table>
     </div>
 
-    <br><br><br><br><br><br><br><br><br><br>
+    <br><br>
     <div class="col-xs-4">
       <table class="table">
         <tbody>
